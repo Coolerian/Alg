@@ -145,15 +145,15 @@ int main()
 	{
 	case 1:
 	{const int arr_size1 = 100;
-		int arr1[arr_size1];
-		for (int counter = 0; counter < arr_size1; counter++)
-		{
-			arr1[counter] = rand() % 150;
-			cout << arr1[counter] << " ";
-		}
-		Sort(arr1, arr_size1);
+	int arr1[arr_size1];
+	for (int counter = 0; counter < arr_size1; counter++)
+	{
+		arr1[counter] = rand() % 150;
+		cout << arr1[counter] << " ";
 	}
-		break;
+	Sort(arr1, arr_size1);
+	}
+	break;
 
 	case 2:
 	{const int arr_size2 = 1000;
@@ -164,17 +164,20 @@ int main()
 		cout << arr2[counter] << " ";
 	}
 	Sort(arr2, arr_size2); }
-		break;
+	break;
 
-	/*case 3:
-		const int arr_size = 10;
-		int arr[arr_size] = { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
-		break;
+	case 3:
+	{const int arr_size3 = 10;
+	int arr3[arr_size3] = { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
+	Sort(arr3, arr_size3); }
+	break;
 
 	default:
-		const int arr_size = 10;
-		int arr[arr_size] = { 4, 7, 9, 2, 5, 0, 1, 3, 6, 8 };
-		break;*/
+	{const int arr_size4 = 10;
+		int arr4[arr_size4] = { 4, 7, 9, 2, 5, 0, 1, 3, 6, 8 };
+		Sort(arr4, arr_size4);
+	}
+		break;
 	}
 
 
