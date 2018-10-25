@@ -51,7 +51,7 @@ int main()
 
 	default:
 	{const int arr_size4 = 10;
-		int arr4[arr_size4] = {4, 7, 9, 2, 5, 0, 1, 3, 6, 8 };
+		int arr4[arr_size4] = {0, 1, 1, 1, 4, 5, 6, 6, 7, 8};
 		Sort(arr4, arr_size4);
 	}
 		break;
@@ -60,34 +60,49 @@ int main()
 
 	unsigned int end_time = clock();
 	unsigned int search_time = end_time - start_time; 
-	cout << "Время работы = " << search_time << endl;
+	cout <<  "Время работы = " << search_time << endl;
 	return 0;
 }
 
 void swapEl(int *arr, int i)
 {
- int buff;
- buff = arr[i];
+ int tmp;
+ tmp = arr[i];
  arr[i] = arr[i - 1];
- arr[i - 1] = buff;
+ arr[i - 1] = tmp;
 }
 
 void Sort(int* arr, int arr_size) 
 	{
 	    
+	
  int leftMark = 1;
  int rightMark = arr_size - 1;
+ int compare = 0;
+ int counter_swaps = 0;
  while (leftMark <= rightMark)
  {
+	 
  for (int i = rightMark; i >= leftMark; i--)
- if (arr[i - 1] > arr[i]) swapEl(arr, i);
+	 if (arr[i - 1] <= arr[i]){
+		 compare++;}
+	 else if (arr[i - 1] > arr[i]) swapEl(arr, i);
  leftMark++;
+ counter_swaps++;
+ compare++;
  
  
  for (int i = leftMark; i <= rightMark; i++)
- if (arr[i - 1] > arr[i]) swapEl(arr, i);
+	if (arr[i - 1] <= arr[i]){
+		compare++;}
+ else if (arr[i - 1] > arr[i]) swapEl(arr, i);
  rightMark--;
- 
- cout << "\nИтерация: " << leftMark - 1; // просмотр количества итераций
+ counter_swaps++;
+ compare++;
  }
+
+	cout << endl << "Количество сравнений:" << compare << endl;
+	cout << "Количество перестановок:" << counter_swaps << endl;
+
+
 }
