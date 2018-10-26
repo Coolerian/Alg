@@ -82,7 +82,6 @@ void Sort(int* arr, int arr_size) {
 			arr[j] = tmp;
 		}
 	}
-	//cout << arr[arr_size] << endl;
 	cout << endl << "Количество сравнений:" << compare + counter_swaps << endl;
 	cout << "Количество перестановок:" << counter_swaps << endl;
 
