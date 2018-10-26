@@ -1,0 +1,64 @@
+#include "stdafx.h"
+#include <stdio.h>
+#include <iostream>
+#include <conio.h>
+#include <cmath>
+
+using namespace std;
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	//======= Задание массива =======//
+	int n;
+	cout << "Сколько вы хотите ввести сторон?\n";
+	cin >> n;
+	float *darr = new float[n];
+
+	//======= Заполнение массива ======//
+	for (int i = 0; i < n; i++)
+	{
+		cout << ("Введите размерность сторон\n");
+		cin >> darr[i];
+	}
+	//======= Выводим полученную последовательность ======//
+	cout << "Полученную последовательность: ";
+	for (int i = 0; i <n; i++)
+	{
+		cout << darr[i] << " ";
+	}
+
+	//====== СОРТИРОВКА ПО УБЫВАНИЮ ========//
+
+	for (int i = 0; i < n - 1; ++i) 
+	{
+		for (int j = 0; j < n - 1; ++j) 
+		{
+			if (darr[j + 1] > darr[j])
+			{
+				float tmp = darr[j + 1];
+				darr[j + 1] = darr[j];
+				darr[j] = tmp;
+			}
+		}
+	}
+	//======== Вывод отсортированного массива на экран ===========//
+	cout << endl << "Сортировка по убыванию: ";
+	for (int i = 0; i < n; i++)
+		cout << ( darr[i]) << " ";
+
+	float r;
+	float p = (darr[0] + darr[1] + darr[2]) / 2;
+	r = sqrt(p*(p - darr[0])*(p - darr[1])*(p - darr[2]));
+	cout.precision(3);//делает то, но не так
+	cout << endl << "Площадь треугольника: " << r << endl;
+	
+	cout << "Выбранные отрезки: " << darr[2] << ", " << darr[1] << " и " << darr[0] << endl;
+
+	return 0;
+}
+
+
+
+
+	
