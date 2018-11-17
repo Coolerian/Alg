@@ -1,112 +1,114 @@
+#pragma warning(disable : 4996) // не делает то, что должна 
+
 #include "stdafx.h"
 #include <stdio.h>
 #include <iostream>
 #include <Windows.h>
 #include <conio.h>
 using namespace std;
- 
-bool funcprov( const int x, const int y,int mas[][4]) { // функция проверки решения пятнашек
-    for (int i2 = 0; i2 < 16; i2++) {
-        if (!(mas[0][i2] == i2+1))
-            return false;
-    }
-    return true;
+
+bool funcprov(const int x, const int y, int mas[][4]) { // функция проверки решения пятнашек
+	for (int i2 = 0; i2 < 16; i2++) {
+		if (!(mas[0][i2] == i2 + 1))
+			return false;
+	}
+	return true;
 }
- 
-int main(){
-    setlocale(LC_ALL,"Rus"); // русский язык 
-    int const x=4,y=4; // размерсность массива
-    int mas[x][y] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,15}; // массив
+
+int main() {
+	setlocale(LC_ALL, "Rus"); // русский язык 
+	int const x = 4, y = 4; // размерсность массива
+	int mas[x][y] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,15 }; // массив
 start:
-    system("cls");
-    for (int i = 0; i < x; i++)
-    {
-        for (int i2 = 0; i2 < y; i2++)
-        {
-            if (mas[i][i2]==16)
-                cout << "_" << "\t";
-            else
-            cout << mas[i][i2]<<"\t";
-        }
-        cout << endl << endl << endl;
-    }
-    while (true)
-    {
-        if (funcprov( x, y,mas) == true) {
-            break;
-        }
-        else {
-            while (true)
-            {
-                int key;
-                if (kbhit()) {
-                    key = getch();
-                    if (key == 119 || key == 72) { // движение вверх (w)
-                        
-                        for (int i = 0; i < 4; i++)
-                        {
-                            for (int i2 = 0; i2 < 4; i2++) {
-                                if (mas[i2][i] == 16) {
-                                    if(i2==0){}
-                                    else
-                                    swap(mas[i2][i], mas[i2 - 1][i]);
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-                    }
-                    if (key == 115 || key == 80) { // движение вниз (s)
-                        for (int i = 0; i < 4; i++)
-                        {
-                            for (int i2 = 0; i2 < 4; i2++) {
-                                if (mas[i2][i] == 16) {
-                                    if (i2 == 3) {}
-                                    else
-                                       swap(mas[i2][i], mas[i2 + 1][i]);
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-                    }
-                    if (key == 97 || key == 75) { // движение влево (a)
-                        for (int i = 0; i < 4; i++)
-                        {
-                            for (int i2 = 0; i2 < 4; i2++) {
-                                if (mas[i2][i] == 16) {
-                                    if (i == 0) {}
-                                    else
-                                        swap(mas[i2][i], mas[i2][i-1]);
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-                    }
-                   if (key == 100 || key == 77) { // движение вправо (d)
-                        for (int i = 0; i < 4; i++)
-                        {
-                            for (int i2 = 0; i2 < 4; i2++) {
-                                if (mas[i2][i] == 16) {
-                                    if (i == 3) {}
-                                    else
-                                       swap(mas[i2][i], mas[i2][i + 1]);
-                                    goto valim;
-                                }
-                            }
-                        }
-                        valim:
-                        break;
-                    }
- 
-                }
-                else
-                    Sleep(1);
-            }
-            goto start;
-        }
-    }
-    cout << "Победа" << endl;
-    cin.get(); cin.get();
+	system("cls"); // очищает экран
+	for (int i = 0; i < x; i++)
+	{
+		for (int i2 = 0; i2 < y; i2++)
+		{
+			if (mas[i][i2] == 16)
+				cout << "_" << "\t";
+			else
+				cout << mas[i][i2] << "\t";
+		}
+		cout << endl << endl << endl;
+	}
+	while (true)
+	{
+		if (funcprov(x, y, mas) == true) {
+			break;
+		}
+		else {
+			while (true)
+			{
+				int key;
+				if (_kbhit()) { // ожидание нажатия клавиши
+					key = _getch(); // получение значения клавиши без вывода на экран
+					if (key == 119 || key == 72) { // движение вверх (w)
+
+						for (int i = 0; i < 4; i++)
+						{
+							for (int i2 = 0; i2 < 4; i2++) {
+								if (mas[i2][i] == 16) {
+									if (i2 == 0) {}
+									else
+										swap(mas[i2][i], mas[i2 - 1][i]);
+									break;
+								}
+							}
+						}
+						break;
+					}
+					if (key == 115 || key == 80) { // движение вниз (s)
+						for (int i = 0; i < 4; i++)
+						{
+							for (int i2 = 0; i2 < 4; i2++) {
+								if (mas[i2][i] == 16) {
+									if (i2 == 3) {}
+									else
+										swap(mas[i2][i], mas[i2 + 1][i]);
+									break;
+								}
+							}
+						}
+						break;
+					}
+					if (key == 97 || key == 75) { // движение влево (a)
+						for (int i = 0; i < 4; i++)
+						{
+							for (int i2 = 0; i2 < 4; i2++) {
+								if (mas[i2][i] == 16) {
+									if (i == 0) {}
+									else
+										swap(mas[i2][i], mas[i2][i - 1]);
+									break;
+								}
+							}
+						}
+						break;
+					}
+					if (key == 100 || key == 77) { // движение вправо (d)
+						for (int i = 0; i < 4; i++)
+						{
+							for (int i2 = 0; i2 < 4; i2++) {
+								if (mas[i2][i] == 16) {
+									if (i == 3) {}
+									else
+										swap(mas[i2][i], mas[i2][i + 1]);
+									goto valim;
+								}
+							}
+						}
+					valim:
+						break;
+					}
+
+				}
+				else
+					Sleep(1);
+			}
+			goto start;
+		}
+	}
+	cout << "Победа" << endl;
+	cin.get(); cin.get();
 }
