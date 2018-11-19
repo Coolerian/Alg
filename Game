@@ -50,7 +50,7 @@ start: // label for goto
 						{
 							for (int i2 = 0; i2 < 4; i2++) {
 								if (mas[i2][i] == 16) {
-									if (i2 == 0) {}
+									if (i2 == 0) {} // если край
 									else
 										swap(mas[i2][i], mas[i2 - 1][i]);
 									break;
@@ -64,7 +64,7 @@ start: // label for goto
 						{
 							for (int i2 = 0; i2 < 4; i2++) {
 								if (mas[i2][i] == 16) {
-									if (i2 == 3) {}
+									if (i2 == 3) {} // если край
 									else
 										swap(mas[i2][i], mas[i2 + 1][i]);
 									break;
@@ -78,7 +78,7 @@ start: // label for goto
 						{
 							for (int i2 = 0; i2 < 4; i2++) {
 								if (mas[i2][i] == 16) {
-									if (i == 0) {}
+									if (i == 0) {} // если край
 									else
 										swap(mas[i2][i], mas[i2][i - 1]);
 									break;
@@ -92,7 +92,7 @@ start: // label for goto
 						{
 							for (int i2 = 0; i2 < 4; i2++) {
 								if (mas[i2][i] == 16) {
-									if (i == 3) {}
+									if (i == 3) {} // если край
 									else
 										swap(mas[i2][i], mas[i2][i + 1]);
 									break;
