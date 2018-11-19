@@ -21,7 +21,7 @@ int main() {
 	int mas[x][y] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,15 }; // массив
 start:
 	system("cls"); // очищает экран
-	for (int i = 0; i < x; i++)
+	for (int i = 0; i < x; i++) // замена 16 на __
 	{
 		for (int i2 = 0; i2 < y; i2++)
 		{
@@ -32,9 +32,10 @@ start:
 		}
 		cout << endl << endl << endl;
 	}
+
 	while (true)
 	{
-		if (funcprov(x, y, mas) == true) {
+		if (funcprov(x, y, mas) == true) { // если решили, то выход
 			break;
 		}
 		else {
@@ -110,5 +111,4 @@ start:
 		}
 	}
 	cout << "Победа" << endl;
-	cin.get(); cin.get();
 }
