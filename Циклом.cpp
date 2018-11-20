@@ -9,22 +9,22 @@
 
 using namespace std;
 
-int fibo(int n)  
-{
-	if (n == 0 || n == 1) return n; 
-	else return fibo(n - 1) + fibo(n - 2); 
-}
 
 
 int main()
 {
 	int n;
+	int fib1;
+	int fib2;
 	cout << "N=";
 	cin >> n;
-
-	for (int i = 1; i <= n; i++)  
-		cout << "Fibonachi = " << fibo(i) << endl;
-
-
+int i=2;
+	while i<n{
+	fib_sum = fib2 + fib1
+	    fib1 = fib2
+  	  fib2 = fib_sum
+	    i++;
+	}
+	cout << fib_sum;
 	return 0;
 }
