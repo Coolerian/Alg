@@ -16,24 +16,28 @@ bool funcprov(const int x, const int y, int mas[][4]) { // функция про
 	return true;
 }
 
-void shuffle(int mas, int N)
-{
-    
-    srand(time(NULL));
- 
-    
-    for (int i = 0; i < N; i ++) {
-  swap(mas[i], mas[rand() % i+1]);
-}
-}
 
 int main() {
 	setlocale(LC_ALL, "Rus"); // русский язык 
+	srand(time(0)); // автоматическая рандомизация
 	int const x = 4, y = 4; // размерсность массива
-	int mas[x][y] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,15}; // массив
-	shuffle(mas, 10);
-start: // label for goto
+	int mas[x][y] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,15 }; // массив
+start:
 	system("cls"); // очищает экран
+
+	int tmp, t_row, t_column;
+	for (int row = 0; row <= 3; row++)
+	{
+		for (int column = 0; column <= 3; column++)
+		{
+			tmp = mas[row][column];
+			t_row = rand() % 4;
+			t_column = rand() % 4;
+			mas[row][column] = mas[t_row][t_column];
+			mas[t_row][t_column] = tmp;
+		}
+	}
+
 	for (int i = 0; i < x; i++) // замена 16 на __
 	{
 		for (int i2 = 0; i2 < y; i2++)
@@ -63,7 +67,7 @@ start: // label for goto
 						{
 							for (int i2 = 0; i2 < 4; i2++) {
 								if (mas[i2][i] == 16) {
-									if (i2 == 0) {} // если край
+									if (i2 == 0) {}
 									else
 										swap(mas[i2][i], mas[i2 - 1][i]);
 									break;
@@ -77,7 +81,7 @@ start: // label for goto
 						{
 							for (int i2 = 0; i2 < 4; i2++) {
 								if (mas[i2][i] == 16) {
-									if (i2 == 3) {} // если край
+									if (i2 == 3) {}
 									else
 										swap(mas[i2][i], mas[i2 + 1][i]);
 									break;
@@ -91,7 +95,7 @@ start: // label for goto
 						{
 							for (int i2 = 0; i2 < 4; i2++) {
 								if (mas[i2][i] == 16) {
-									if (i == 0) {} // если край
+									if (i == 0) {}
 									else
 										swap(mas[i2][i], mas[i2][i - 1]);
 									break;
@@ -105,7 +109,7 @@ start: // label for goto
 						{
 							for (int i2 = 0; i2 < 4; i2++) {
 								if (mas[i2][i] == 16) {
-									if (i == 3) {} // если край
+									if (i == 3) {}
 									else
 										swap(mas[i2][i], mas[i2][i + 1]);
 									break;
@@ -114,14 +118,18 @@ start: // label for goto
 						}
 						break;
 					}
-
+					if (key == 32) { // перемешиваем 
+						break;
+					}
 				}
 				else
-					Sleep(1); // должно тормозить время
+					Sleep(1);
 			}
 			goto start;
 		}
 	}
+
 	cout << "Победа" << endl;
 }
+
 
