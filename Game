@@ -121,6 +121,10 @@ start:
 					if (key == 32) { // перемешиваем 
 						break;
 					}
+					if (key == 27) { // выходим 
+						cout << "Проигрыш" << endl;
+						exit(1);
+					}
 				}
 				else
 					Sleep(1);
@@ -131,5 +135,6 @@ start:
 
 	cout << "Победа" << endl;
 }
+
 
 
