@@ -1,0 +1,165 @@
+#include "stdafx.h"
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+enum CurrentPos
+{
+	cp_bereg1, cp_bereg2
+};
+
+enum Object
+{
+	o_volk = 1, o_zaic = 2, o_kapusta = 3
+};
+
+class VolkZaicKapusta
+{
+public:
+	bool volk;
+	bool zaic;
+	bool kapusta;
+
+	bool ProverkaKolichestva()
+	{//проверка перегрузки лодки
+		return ((volk && zaic) || (volk && kapusta) || (zaic && kapusta));
+	};
+
+	bool ProverkaEda()
+	{//проверка "пищевая цепь"
+		return ((volk && zaic) || (zaic && kapusta));
+	};
+
+	bool ProverkaEnd()
+	{//проверка наличия транспортируемых объектов (для второго берега)
+		return (volk && zaic && kapusta);
+	};
+
+	void Cls()
+	{//для сброса содержимого лодки и второго берега
+		volk = false;
+		zaic = false;
+		kapusta = false;
+	};
+
+	void All()
+	{//для установки транспортируемых объектов на первом берегу
+		volk = true;
+		zaic = true;
+		kapusta = true;
+	};
+
+	void Out()
+	{
+		if (volk) cout << "Volk ";
+		if (zaic) cout << "Zaic ";
+		if (kapusta) cout << "Kapusta ";
+		cout << endl;
+	};
+
+	void Deistvie(VolkZaicKapusta* lmesto, Object lobject)
+	{
+		bool ltemp;
+		switch (lobject)
+		{
+		case o_volk:
+			ltemp = this->volk;
+			this->volk = lmesto->volk;
+			lmesto->volk = ltemp;
+			break;
+		case o_zaic:
+			ltemp = this->zaic;
+			this->zaic = lmesto->zaic;
+			lmesto->zaic = ltemp;
+			break;
+		case o_kapusta:
+			ltemp = this->kapusta;
+			this->kapusta = lmesto->kapusta;
+			lmesto->kapusta = ltemp;
+			break;
+		};
+	};
+};
+
+VolkZaicKapusta bereg1; //первый берег
+VolkZaicKapusta lodka; //лодка
+VolkZaicKapusta bereg2; //второй берег
+
+CurrentPos pos;
+
+void OutCurrentPos()
+{
+	cout << "Bereg 1: ";
+	bereg1.Out();
+	cout << "Lodka: ";
+	lodka.Out();
+	cout << "Bereg 2: ";
+	bereg2.Out();
+	if (pos == cp_bereg1) cout << "Pologenie: Bereg 1" << endl;
+	else cout << "Pologenie: Bereg 2" << endl;
+};
+
+void Start()
+{
+	bereg1.All();//все на первом берегу
+	bereg2.Cls();//второй берег пуст
+	lodka.Cls();//лодка пуста
+	pos = cp_bereg1;//начальное положение "берег 1"
+};
+
+int main()
+{
+	Start();
+
+	int command;
+
+	do
+	{
+		//здесь манипуляции с волками, зайцами и капустой
+
+		//перемещения между берегом и лодкой
+		//отправка лодки на другой берег 
+
+		do
+		{
+			OutCurrentPos();
+			cout << "Deistvie:" << endl
+				<< "  1 - perem. Volka," << endl
+				<< "  2 - perem. Zaica," << endl
+				<< "  3 - perem. Kapustu," << endl
+				<< "  0 - plit na drugoi bereg" << endl
+				<< "Vas vibor: ";
+			cin >> command;
+			cout << endl;
+			if (pos == cp_bereg1) bereg1.Deistvie(&lodka, (Object)command);
+			else bereg2.Deistvie(&lodka, (Object)command);
+		} while ((command != 0) && !bereg2.ProverkaEnd());
+
+		if (command == 0)
+		{
+			if (lodka.ProverkaKolichestva() == true)
+			{//лодка утонула
+				cout << "Lodka utonula. Nachinaem zanovo." << endl << endl;
+				Start();
+			}
+			else if (bereg1.ProverkaEda() == true)
+			{//утрата груза
+				cout << "Utrata gruza na beregu 1. Nachinaem zanovo." << endl << endl;
+				Start();
+			}
+			else if (bereg2.ProverkaEda() == true)
+			{//утрата груза
+				cout << "Utrata gruza na beregu 2. Nachinaem zanovo." << endl << endl;
+				Start();
+			}
+			else if (pos == cp_bereg1) pos = cp_bereg2;
+			else pos = cp_bereg1;
+		};
+
+		//здесь манипуляции с волками, зайцами и капустой
+	}//условие выполнения задания: все целы и на втором берегу
+	while ((pos != cp_bereg2) || !bereg2.ProverkaEnd());
+
+	cout << "GRUZ DOSTAVLEN!!!" << endl << endl;
+};
