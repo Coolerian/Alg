@@ -9,32 +9,34 @@ using namespace std;
 bool P(int *X, int k, int y, int N) // Поиск позиции для ферзя
 {
 	int i = 0;
-	while ((i<k) && (y != X[i]) && (abs(k - i) != abs(y - X[i]))) { // пока i=0 меньше k и 
+	while ((i<k) && (y != X[i]) && (abs(k - i) != abs(y - X[i]))) { 
 		i++; 
 	} 
 	if (i == k)
-		return true;
-	else if (i != k)
+		return true; //если равно, то выводим возможную комбинацию положений
+	else (i != k); //только в самом конце, так как далее программа выведет лишь ответ
 		return false;
-	else
-		return !true && !false;
+	//else
+		//return !true && !false;
 }
 
 void Backtracking(int k, int &Count, int N, int *X) // Поиск с возвратом позиций
 {
 	int i, y;
-	for (y = 0; y<N; y++)
-		if (P(X, k, y, N))
-		{
-			X[k] = y;
-			if (k == N - 1) {
-				for (i = 0; i<N; i++) { cout << char('A' + i) << X[i] + 1 << " "; }
+	for (y = 0; y<N; y++) // колическво повторений равно N
+		if (P(X, k, y, N)) { // если true, то далее
+			X[k] = y; // ячейка равна y
+			if (k == N - 1) { // если номер элемента рввен размерности - 1
+				for (i = 0; i<N; i++) { //счеткчик для вывода позиций
+					cout << char('A' + i) << X[i] + 1 << " "; // выводим клетки, наа которых стоят фигуры
+				}
 				cout << endl;
-				Count++;
+				Count++; // увеличиваем счетчик количества вариантов 
 			}
-			Backtracking(k + 1, Count, N, X);
+			Backtracking(k + 1, Count, N, X); //вызов функции с повышение значения k (рекурсия)
 		}
 }
+
 int main()
 {
 	setlocale(LC_ALL, "Rus"); // русский язык
@@ -44,8 +46,8 @@ int main()
 	int *X = new int[N]; // чтобы был пользовательский размер
 	for (int i = 0; i<N; i++)
 		X[i] = 0;
-	cout << "Расстановки " << N << " ферзей:" << endl;
-	cout << "На доске " << N << " на " << N << endl;
+	cout << "Расстановки " << N << " ферзей";
+	cout << " на доске " << N << " на " << N << ":" << endl;
 	Backtracking(0, Count, N, X);
 	cout << "Всего " << Count << " расстановок" << endl;
 	delete[]X; // культура программирования 
