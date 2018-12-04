@@ -1,0 +1,159 @@
+#include "stdafx.h"
+#include "time.h"
+#include <iostream>
+#include <iomanip>
+#include <string>
+using namespace std;
+struct Dirq
+{
+	int x;
+	int y;
+};
+
+int DziuHnaravorGnaluDashteryStanal(char a[][8], Dirq, Dirq[]);
+void DashtyTpel(char a[][8]);
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	srand(time(0));
+	char a[8][8] = { 0 };
+	int x;
+	int y;
+	x = rand() % 8;
+	y = rand() % 8;
+	int sch = 1;
+	Dirq hd;
+	hd.x = x;
+	hd.y = y;
+	a[x][y] = sch++;
+	Dirq d[8];
+	int c = DziuHnaravorGnaluDashteryStanal(a, hd, d);
+	while (c)
+	{
+
+		int min = 10;
+		int indmin = 0;
+		for (int i = 0; i < c; i++)
+		{
+			Dirq d1[8];
+			int q = DziuHnaravorGnaluDashteryStanal(a, d[i], d1);
+			if (q<min)
+			{
+				min = q;
+				indmin = i;
+			}
+		}
+		a[d[indmin].x][d[indmin].y] = sch++;
+		DashtyTpel(a);
+		cout << endl << endl;
+
+		hd = d[indmin];
+		c = DziuHnaravorGnaluDashteryStanal(a, hd, d);
+	}
+
+
+
+	return 0;
+}
+void DashtyTpel(char a[][8])
+{
+	int i;
+	int k;
+	for (i = 0; i < 8; i++)
+	{
+		for (k = 0; k < 8; k++)
+		{
+			if (a[i][k] == 0)
+				cout << setw(2) << '.';
+			else
+				cout << setw(3) << (int)a[i][k];
+
+		}
+		cout << endl;
+	}
+}
+int DziuHnaravorGnaluDashteryStanal(char a[][8], Dirq hp, Dirq d[])
+{
+	int x = hp.x;
+	int y = hp.y;
+	int c = 0;
+	if (x + 1<8 && y + 2<8)
+	{
+		if (a[x + 1][y + 2] == 0)
+		{
+			d[c].x = x + 1;
+			d[c].y = y + 2;
+			c++;
+		}
+	}
+	if (x + 2<8 && y + 1<8)
+	{
+		if (a[x + 2][y + 1] == 0)
+		{
+			d[c].x = x + 2;
+			d[c].y = y + 1;
+			c++;
+		}
+	}
+
+	if (x - 1 >= 0 && y + 2<8)
+	{
+		if (a[x - 1][y + 2] == 0)
+		{
+			d[c].x = x - 1;
+			d[c].y = y + 2;
+			c++;
+		}
+	}
+
+	if (y - 1 >= 0 && x + 2<8)
+	{
+		if (a[x + 2][y - 1] == 0)
+		{
+			d[c].x = x + 2;
+			d[c].y = y - 1;
+			c++;
+		}
+	}
+
+	if (x - 2 >= 0 && y + 1<8)
+	{
+		if (a[x - 2][y + 1] == 0)
+		{
+			d[c].x = x - 2;
+			d[c].y = y + 1;
+			c++;
+		}
+	}
+
+	if (y - 2 >= 0 && x + 1<8)
+	{
+		if (a[x + 1][y - 2] == 0)
+		{
+			d[c].x = x + 1;
+			d[c].y = y - 2;
+			c++;
+		}
+	}
+
+	if (x - 2 >= 0 && y - 1 >= 0)
+	{
+		if (a[x - 2][y - 1] == 0)
+		{
+			d[c].x = x - 2;
+			d[c].y = y - 1;
+			c++;
+		}
+	}
+
+	if (y - 2 >= 0 && x - 1 >= 0)
+	{
+		if (a[x - 1][y - 2] == 0)
+		{
+			d[c].x = x - 1;
+			d[c].y = y - 2;
+			c++;
+		}
+	}
+	return c;
+}
