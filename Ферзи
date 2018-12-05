@@ -9,7 +9,7 @@ using namespace std;
 bool P(int *X, int k, int y, int N) // Поиск позиции для ферзя
 {
 	int i = 0;
-	while ((i<k) && (y != X[i]) && (abs(k - i) != abs(y - X[i]))) { 
+	while ((i<k) && (y != X[i]) && (abs(k - i) != abs(y - X[i]))) { // формала для поиска (нашел в Интеренете)
 		i++; 
 	} 
 	if (i == k)
@@ -51,4 +51,5 @@ int main()
 	Backtracking(0, Count, N, X);
 	cout << "Всего " << Count << " расстановок" << endl;
 	delete[]X; // культура программирования 
+	// return 0;
 }
