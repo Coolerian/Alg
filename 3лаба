@@ -1,0 +1,156 @@
+#include "stdafx.h"
+#include <iostream>
+#include <fstream>
+#include <unordered_map> // хеш-таблица 
+#include <iterator> 
+
+using namespace std;
+
+struct Node
+{
+	int key;
+	unsigned int height; // высота поддерева с корнем в данном узле
+	Node* left;
+	Node* right;
+	Node(int k) { key = k; left = right = 0; height = 1; } // иниц первого узла 
+
+};
+
+unsigned int height(Node* p) // передаем узел
+{
+	return p ? p->height : 0; // если p сущ возв высота иначе 0 
+}
+
+int bfactor(Node* p) // balance
+{
+	return height(p->right) - height(p->left); // содержит разнмцу между высотами, для проверки, нужна ли балансиировка
+}
+
+void fixheight(Node* p) // для нормального вывода высоты
+{
+	unsigned int hl = height(p->left);
+	unsigned int hr = height(p->right);
+	p->height = (hl > hr ? hl : hr) + 1; // какая из высот больше, то поддерево и суммируется + 1
+}
+void push_hash(Node* x, unordered_map<int, int> y)
+{
+	if (x != NULL)
+		y[x->height] = x->key; // то ключ = высота, а значение = ключ
+	if (x->left != NULL) // если левое не пустое, то рекурсивно проходим дальше до конца дерева
+		push_hash(x->left, y);
+	if (x->right != NULL)// если правое не пустое, то рекурсивно проходим дальше до конца дерева
+		push_hash(x->right, y);
+	cout << x->height << " " << y[x->height] << endl; // высота - ключ
+
+}
+void preorderTraversal(Node* x)//preorderTraversal — обход узлов в порядке: вершина, левое поддерево, правое поддерево.
+{
+	if (x != NULL)
+		cout << x->key << " " << x->height << endl;
+	if (x->left != NULL)
+		preorderTraversal(x->left);
+	if (x->right != NULL)
+		preorderTraversal(x->right);
+}
+Node* rotateright(Node* p) // правый поворот вокруг p
+{
+	Node* q = p->left;
+	p->left = q->right;
+	q->right = p;
+	fixheight(p);
+	fixheight(q);
+	return q;
+}
+
+Node* rotateleft(Node* q) // левый поворот вокруг q
+{
+	Node* p = q->right;
+	q->right = p->left;
+	p->left = q;
+	fixheight(q);
+	fixheight(p);
+	return p;
+}
+
+Node* balance(Node* p) // балансировка узла p
+{
+	fixheight(p);
+	if (bfactor(p) == 2) 
+	{
+		if (bfactor(p->right) < 0) // если правое поддерево меньше < 0( левого, так как разница меньше 0)
+			p->right = rotateright(p->right); // то правый поворот
+		return rotateleft(p);
+	}
+	if (bfactor(p) == -2)
+	{
+		if (bfactor(p->left) > 0)
+			p->left = rotateleft(p->left);
+		return rotateright(p);
+	}
+	return p; // балансировка не нужна
+}
+
+Node* insert(Node* p, int k) // вставка ключа k в дерево с корнем p
+{
+	if (!p)
+	{
+		return new Node(k);
+	}
+	if (k < p->key)
+	{
+
+		p->left = insert(p->left, k);
+
+
+	}
+	else
+	{
+		p->right = insert(p->right, k);
+
+	}
+	return balance(p);
+}
+
+Node* search(Node* x, int k)
+{
+	if ((x == NULL) || (k == x->key))
+		return x;
+	if (k < x->key)
+		return search(x->left, k);
+	else
+		return search(x->right, k);
+};
+
+int main()
+{
+	ifstream file("data.txt");
+
+	if (file.is_open())
+	{
+		int* a = new int[1000];
+
+		int i = 0;
+
+		while (!file.eof())
+		{
+			file >> a[i];
+			i++;
+		}
+
+		Node* tree = new Node(a[0]);
+
+
+
+		for (int j = 1; j < i; j++)
+		{
+			tree = insert(tree, a[j]);
+		}
+		preorderTraversal(tree);
+		unordered_map<int, int> hex;
+		cout << endl;
+		unordered_map<int, int, less<int>>::iterator iter;
+		push_hash(tree, hex);
+		
+
+	}
+}
